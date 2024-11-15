@@ -17,6 +17,7 @@
 		"version:update": "bumpp --no-commit --no-tag --no-push"
 	},
 	"dependencies": {
+		"ky": "^1.7.2",
 		"pinia": "^2.2.6",
 		"vue": "^3.5.12",
 		"vue-router": "^4.4.5"

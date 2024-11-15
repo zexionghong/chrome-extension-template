@@ -7,7 +7,9 @@
 		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@popup/*": ["./src/pages/popup/*"],
+			"@side-panel": ["./src/pages/side-panel/*"]
 		},
 		"types": ["chrome"]
 	}

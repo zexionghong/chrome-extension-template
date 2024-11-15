@@ -1,11 +1,33 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+
+function onOpenSidePanel() {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		if (tabs.length > 0) {
+			const tab = tabs[0];
+			// 打开侧边栏
+			chrome.sidePanel.open({
+				tabId: tab.id,
+				windowId: tab.windowId
+			});
+		}
+	});
+}
+
+function onOpen404Page() {
+	chrome.tabs.create({
+		url: chrome.runtime.getURL("src/pages/404/index.html")
+	});
+}
 </script>
 
 <template>
 	<header>
-		<img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+		<button @click="onOpenSidePanel">打开侧边栏</button>
+		<br />
+		<button @click="onOpen404Page">打开404页面</button>
+		<img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
 		<div class="wrapper">
 			<HelloWorld msg="You did it!" />
