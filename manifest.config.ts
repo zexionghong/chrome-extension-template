@@ -1,7 +1,7 @@
 /*
  * @Author: mulingyuer
  * @Date: 2024-11-11 11:58:04
- * @LastEditTime: 2024-11-15 17:00:30
+ * @LastEditTime: 2024-11-15 18:25:07
  * @LastEditors: mulingyuer
  * @Description: manifest 配置文件
  * @FilePath: \chrome-extension-template\manifest.config.ts
@@ -17,12 +17,21 @@ export default defineManifest(async (env) => {
 		description: packageJson.description,
 		version: packageJson.version,
 		icons: {
-			"16": "icons/icon-16.png",
-			"32": "icons/icon-32.png",
-			"48": "icons/icon-48.png",
-			"128": "icons/icon-128.png"
+			"16": "images/icons/icon-16.png",
+			"32": "images/icons/icon-32.png",
+			"48": "images/icons/icon-48.png",
+			"128": "images/icons/icon-128.png"
 		},
-		permissions: ["sidePanel", "tabs"],
+		permissions: [
+			"sidePanel",
+			"tabs",
+			"storage",
+			"nativeMessaging",
+			"notifications",
+			"contextMenus",
+			"activeTab",
+			"scripting"
+		],
 		content_scripts: [
 			{
 				js: ["src/pages/content/main.ts"],
@@ -41,7 +50,11 @@ export default defineManifest(async (env) => {
 		},
 		web_accessible_resources: [
 			{
-				resources: ["src/pages/404/index.html"],
+				resources: [
+					"src/pages/404/index.html",
+					"src/assets/images/notifications-icon/error.png",
+					"src/assets/images/notifications-icon/warning.png"
+				],
 				matches: ["<all_urls>"]
 			}
 		]

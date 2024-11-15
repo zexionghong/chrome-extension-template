@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+import { EventName, chromeMessage } from "@/utils/chrome-message";
 
 function onOpenSidePanel() {
 	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -15,6 +16,10 @@ function onOpenSidePanel() {
 	});
 }
 
+function onSendMessageToSidePanel() {
+	chromeMessage.emit(EventName.EXAMPLE_EVENT, "示例消息");
+}
+
 function onOpen404Page() {
 	chrome.tabs.create({
 		url: chrome.runtime.getURL("src/pages/404/index.html")
@@ -25,6 +30,8 @@ function onOpen404Page() {
 <template>
 	<header>
 		<button @click="onOpenSidePanel">打开侧边栏</button>
+		<br />
+		<button @click="onSendMessageToSidePanel">给侧边栏发送一个消息</button>
 		<br />
 		<button @click="onOpen404Page">打开404页面</button>
 		<img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
