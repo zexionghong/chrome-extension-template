@@ -1,7 +1,7 @@
 /*
  * @Author: mulingyuer
  * @Date: 2024-11-11 11:58:04
- * @LastEditTime: 2024-11-15 18:25:07
+ * @LastEditTime: 2024-11-16 13:32:00
  * @LastEditors: mulingyuer
  * @Description: manifest 配置文件
  * @FilePath: \chrome-extension-template\manifest.config.ts
@@ -52,8 +52,9 @@ export default defineManifest(async (env) => {
 			{
 				resources: [
 					"src/pages/404/index.html",
-					"src/assets/images/notifications-icon/error.png",
-					"src/assets/images/notifications-icon/warning.png"
+					"images/notifications-icon/error.png",
+					"images/notifications-icon/warning.png",
+					"favicon.ico"
 				],
 				matches: ["<all_urls>"]
 			}

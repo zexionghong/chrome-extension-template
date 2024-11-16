@@ -29,6 +29,11 @@ export default defineConfig({
 				popup: "src/pages/popup/index.html",
 				"side-panel": "src/pages/side-panel/index.html",
 				404: "src/pages/404/index.html"
+			},
+			output: {
+				assetFileNames: "assets/[name]-[hash].[ext]", // 静态资源
+				chunkFileNames: "js/[name]-[hash].js", // 代码分割中产生的 chunk
+				entryFileNames: "js/[name]-[hash].js"
 			}
 		}
 	}
