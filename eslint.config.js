@@ -2,6 +2,7 @@ import pluginVue from "eslint-plugin-vue";
 import vueTsEslintConfig from "@vue/eslint-config-typescript";
 import oxlint from "eslint-plugin-oxlint";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
+import AutoImport from "./.eslintrc-auto-import.cjs";
 
 export default [
 	{
@@ -18,6 +19,22 @@ export default [
 	...vueTsEslintConfig(),
 	oxlint.configs["flat/recommended"],
 	skipFormatting,
+	{
+		ignores: [".vscode", "node_modules", "*.md", "*.woff", "*.ttf", ".idea", "dist", ".husky"],
+		files: ["**/*.{js,ts,mjs,mts,cjs,cts,jsx,tsx,vue}"],
+		languageOptions: {
+			parserOptions: {
+				ecmaVersion: "latest",
+				sourceType: "module",
+				ecmaFeatures: {
+					jsx: true
+				}
+			},
+			globals: {
+				...autoImport.globals
+			}
+		}
+	},
 	{
 		rules: {
 			"@typescript-eslint/no-explicit-any": "off",

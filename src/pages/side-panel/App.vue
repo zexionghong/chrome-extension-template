@@ -5,7 +5,6 @@
 
 <script setup lang="ts">
 import { EventName, chromeMessage } from "@/utils/chrome-message";
-import { ref } from "vue";
 
 const message = ref("暂无消息");
 chromeMessage.on(EventName.EXAMPLE_EVENT, (msg) => {
