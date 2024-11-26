@@ -1,7 +1,7 @@
 /*
  * @Author: mulingyuer
  * @Date: 2024-11-11 11:58:04
- * @LastEditTime: 2024-11-18 09:45:51
+ * @LastEditTime: 2024-11-26 09:15:30
  * @LastEditors: mulingyuer
  * @Description: manifest 配置文件
  * @FilePath: \chrome-extension-template\manifest.config.ts
@@ -49,6 +49,7 @@ export default defineManifest(async (env) => {
 		side_panel: {
 			default_path: "src/pages/side-panel/index.html"
 		},
+		devtools_page: "src/pages/devtool/index.html",
 		web_accessible_resources: [
 			{
 				resources: [

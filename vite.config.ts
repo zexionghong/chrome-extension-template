@@ -41,7 +41,9 @@ export default defineConfig({
 			input: {
 				popup: "src/pages/popup/index.html",
 				"side-panel": "src/pages/side-panel/index.html",
-				404: "src/pages/404/index.html"
+				404: "src/pages/404/index.html",
+				devtool: "src/pages/devtool/index.html",
+				"devtool-panel": "src/pages/devtool-panel/index.html"
 			},
 			output: {
 				assetFileNames: "assets/[name]-[hash].[ext]", // 静态资源
