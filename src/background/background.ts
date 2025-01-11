@@ -7,32 +7,64 @@
  * @FilePath: \chrome-extension-template\src\background\background.ts
  * 怎么可能会有bug！！！
  */
-import { MenuId, chromeContextMenu } from "@/utils/chrome-context-menus";
-import { ChromeNotifications } from "@/utils/chrome-notifications";
+import { ProxyStorage } from '@/utils/proxy-storage';
+import { ChromeProxy } from '@/utils/chrome-proxy';
 
-/** 添加示例右键菜单 */
-function addContextMenu() {
-	chromeContextMenu.create({
-		menuProperties: {
-			id: MenuId.EXAMPLE_MENU,
-			title: "谷歌浏览器扩展模板菜单",
-			contexts: ["all"]
-		},
-		onClicked: (info, tab) => {
-			console.log("右键菜单点击事件", info, tab);
-			ChromeNotifications.warning("你点击了右键菜单！");
-		}
+// 确保在扩展环境中运行
+if (chrome && chrome.runtime) {
+	// 监听安装事件
+	chrome.runtime.onInstalled.addListener(() => {
+		console.log('代理扩展已安装');
 	});
+
+	// 监听代理配置变更
+	if (chrome.storage) {
+		chrome.storage.onChanged.addListener((changes) => {
+			if (changes.proxy_configs) {
+				console.log('代理配置已更新');
+				handleProxyConfigChange();
+			}
+		});
+	}
+
+	// 监听标签页更新
+	if (chrome.tabs) {
+		chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+			if (changeInfo.status === 'loading' && tab.url) {
+				handleTabUpdate();
+			}
+		});
+	}
 }
 
-/** 插件安装 */
-chrome.runtime.onInstalled.addListener(async () => {
-	console.log("插件安装成功！");
-	addContextMenu();
-});
+// 处理代理配置变更
+async function handleProxyConfigChange() {
+	try {
+		const activeConfig = await ProxyStorage.getActiveConfig();
+		if (activeConfig) {
+			const configs = await ProxyStorage.getAllProxyConfigs();
+			if (configs[activeConfig]) {
+				await ChromeProxy.setProxy(configs[activeConfig]);
+			}
+		}
+	} catch (error) {
+		console.error('处理代理配置变更失败:', error);
+	}
+}
 
-/** 插件启用 */
-chrome.runtime.onStartup.addListener(async () => {
-	console.log("插件启用成功！");
-	addContextMenu();
-});
+// 处理标签页更新
+async function handleTabUpdate() {
+	try {
+		const configs = await ProxyStorage.getAllProxyConfigs();
+		const activeConfig = await ProxyStorage.getActiveConfig();
+
+		if (activeConfig && configs[activeConfig]) {
+			await ChromeProxy.setProxy(configs[activeConfig]);
+		}
+	} catch (error) {
+		console.error('设置代理失败:', error);
+	}
+}
+
+// 导出一个空对象以满足模块要求
+export {};

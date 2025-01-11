@@ -13,8 +13,8 @@ import packageJson from "./package.json";
 export default defineManifest(async (env) => {
 	return {
 		manifest_version: 3,
-		name: env.mode === "production" ? packageJson.name : `[dev] ${packageJson.name}`,
-		description: packageJson.description,
+		name: env.mode === "production" ? "Chrome代理扩展" : `[dev] Chrome代理扩展`,
+		description: "一个强大的Chrome代理管理扩展",
 		version: packageJson.version,
 		minimum_chrome_version: "116",
 		icons: {
@@ -24,42 +24,19 @@ export default defineManifest(async (env) => {
 			"128": "images/icons/icon-128.png"
 		},
 		permissions: [
-			"sidePanel",
-			"tabs",
+			"proxy",
 			"storage",
-			"nativeMessaging",
-			"notifications",
-			"contextMenus",
-			"activeTab",
-			"scripting"
+			"tabs"
 		],
-		content_scripts: [
-			{
-				js: ["src/pages/content/main.ts"],
-				matches: ["https://www.google.com/*"]
-			}
+		host_permissions: [
+			"<all_urls>"
 		],
-		background: {
-			service_worker: "src/background/background.ts",
-			type: "module"
-		},
 		action: {
 			default_popup: "src/pages/popup/index.html"
 		},
-		side_panel: {
-			default_path: "src/pages/side-panel/index.html"
-		},
-		devtools_page: "src/pages/devtool/index.html",
-		web_accessible_resources: [
-			{
-				resources: [
-					"src/pages/404/index.html",
-					"images/notifications-icon/error.png",
-					"images/notifications-icon/warning.png",
-					"favicon.ico"
-				],
-				matches: ["<all_urls>"]
-			}
-		]
+		background: {
+			service_worker: "src/background/background.ts",
+			type: "module"
+		}
 	};
 });

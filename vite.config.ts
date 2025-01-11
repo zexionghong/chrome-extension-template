@@ -12,7 +12,7 @@ export default defineConfig({
 		vue(),
 		crx({ manifest: defineManifest }),
 		AutoImport({
-			imports: ["vue", "vue-router", "pinia"],
+			imports: ["vue", "pinia"],
 			dts: "types/auto-imports.d.ts",
 			eslintrc: {
 				enabled: true,
@@ -23,9 +23,7 @@ export default defineConfig({
 	],
 	resolve: {
 		alias: {
-			"@": fileURLToPath(new URL("./src", import.meta.url)),
-			"@popup": fileURLToPath(new URL("./src/pages/popup", import.meta.url)),
-			"@side-panel": fileURLToPath(new URL("./src/pages/side-panel/index.html", import.meta.url))
+			"@": fileURLToPath(new URL("./src", import.meta.url))
 		}
 	},
 	// HACK: https://github.com/crxjs/chrome-extension-tools/issues/696
@@ -39,11 +37,7 @@ export default defineConfig({
 	build: {
 		rollupOptions: {
 			input: {
-				popup: "src/pages/popup/index.html",
-				"side-panel": "src/pages/side-panel/index.html",
-				404: "src/pages/404/index.html",
-				devtool: "src/pages/devtool/index.html",
-				"devtool-panel": "src/pages/devtool-panel/index.html"
+				popup: "src/pages/popup/index.html"
 			},
 			output: {
 				assetFileNames: "assets/[name]-[hash].[ext]", // 静态资源
